@@ -133,6 +133,7 @@ dmypy.json
 *.pt
 *.pth
 *.onnx
+*.engine
 *.zip
 *.html
 .DS_Store

@@ -96,7 +96,8 @@ class TRTInference(object):
                 self.context.set_input_shape(n, blob[n].shape)
                 self.bindings[n] = self.bindings[n]._replace(shape=blob[n].shape)
 
-            assert self.bindings[n].data.dtype == blob[n].dtype, '{} dtype mismatch'.format(n)
+            assert self.bindings[n].data.dtype == blob[n].dtype, \
+                '{} dtype mismatch, {} - {}'.format(n, self.bindings[n].data.dtype, blob[n].dtype)
 
         self.bindings_addr.update({n: blob[n].data_ptr() for n in self.input_names})
         self.context.execute_v2(list(self.bindings_addr.values()))
@@ -135,7 +136,7 @@ def draw(images, labels, boxes, scores, thrh=0.4):
 def process_image(m, file_path, device):
     im_pil = Image.open(file_path).convert('RGB')
     w, h = im_pil.size
-    orig_size = torch.tensor([w, h])[None].to(device)
+    orig_size = torch.tensor([w, h], dtype=torch.int64)[None].to(device)
 
     transforms = T.Compose([
         T.Resize((640, 640)),
