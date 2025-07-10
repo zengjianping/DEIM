@@ -1,9 +1,9 @@
 #!/bin/bash
 
-INPUT=datas/test_images/small-vehicles1.jpeg
-#INPUT=datas/test_videos/multi02.avi
+INPUT=datas/images/image00/small-vehicles1.jpeg
+#INPUT=datas/videos/multi02.avi
 
 python tools/inference/onnx_inf.py \
-    --onnx datas/pretrained_models/deim_dfine_hgnetv2_n_coco_160e.onnx \
+    --onnx datas/models/deim_dfine_hgnetv2_l_coco_50e.onnx \
     --input $INPUT
 
