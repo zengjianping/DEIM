@@ -32,6 +32,8 @@ def main(args):
             state = checkpoint['model']
 
         # NOTE load train mode state -> convert to deploy mode
+        state.pop('decoder.anchors')
+        state.pop('decoder.valid_mask')
         cfg.model.load_state_dict(state)
 
     else:
@@ -65,7 +67,7 @@ def main(args):
             return num_dets, bboxes, scores, labels
 
     model = Model(args.max_dets, args.thres_conf)
-    data = torch.rand(8, 3, 640, 640)
+    data = torch.rand(1, 3, 640, 640)
     _ = model(data)
 
     dynamic_axes = {
